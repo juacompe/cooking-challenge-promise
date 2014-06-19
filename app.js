@@ -24,7 +24,7 @@ app.controller('CookingChallengeController', function($scope, $q) {
             secondCue: result.secondCue,
             thirdCue: result.thirdCue,
             ingredient: result.ingredient,
-            foundAt: Date.now()
+            createdAt: Date.now()
           });
         }, function(reason) {
           deferred.reject({
@@ -33,9 +33,21 @@ app.controller('CookingChallengeController', function($scope, $q) {
             secondCue: reason.secondCue,
             thirdCue: reason.thirdCue,
             ingredient: "",
-            givenupAt: Date.now()
+            createdAt: Date.now()
           });
         });
+
+    return deferred.promise;
+  };
+
+  useFirstCue = function(challengerName) {
+    var deferred = $q.defer();
+
+    deferred.resolve({
+      challengerName: challengerName,
+      firstCue: FIRST_CUE,
+      secondCue: SECOND_CUE
+    });
 
     return deferred.promise;
   };
