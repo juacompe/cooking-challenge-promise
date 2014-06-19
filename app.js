@@ -17,7 +17,7 @@ app.controller('CookingChallengeController', function($scope, $q) {
     useFirstCue(challengerName)
       .then(useSecondCue)
       .then(useThirdCue)
-      .then(function(result) {
+      .then(function(result)
           deferred.resolve({
             challengerName: result.challengerName,
             firstCue: result.firstCue,
@@ -46,7 +46,25 @@ app.controller('CookingChallengeController', function($scope, $q) {
     deferred.resolve({
       challengerName: challengerName,
       firstCue: FIRST_CUE,
-      secondCue: SECOND_CUE
+      secondCue: SECOND_CUE,
+      thirdCue: "",
+      ingredient: "",
+      createdAt: Date.now()
+    });
+
+    return deferred.promise;
+  };
+
+  useSecondCue = function(challenger) {
+    var deferred = $q.defer();
+
+    deferred.resolve({
+      challengerName: challenger.challengerName,
+      firstCue: challenger.firstCue,
+      secondCue: challenger.secondCue,
+      thirdCue: THIRD_CUE,
+      ingredient: "",
+      createdAt: Date.now()
     });
 
     return deferred.promise;
