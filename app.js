@@ -70,4 +70,25 @@ app.controller('CookingChallengeController', function($scope, $q) {
     return deferred.promise;
   };
 
+  useThirdCue = function(challenger) {
+    var deferred = $q.defer();
+
+    if (challenger.challengerName == ICHIKO) {
+      challenger: challenger.challengerName,
+      firstCue: challenger.firstCue,
+      secondCue: challenger.secondCue,
+      thirdCue: challenger.thirdCue,
+      ingredient: RARE_INGREDIENT,
+      createdAt: Date.now()
+    } else {
+      challenger: challenger.challengerName,
+      firstCue: challenger.firstCue,
+      secondCue: challenger.secondCue,
+      thirdCue: challenger.thirdCue,
+      ingredient: "",
+      createdAt: Date.now()
+    }
+
+    return deferred.promise;
+  }
 });
