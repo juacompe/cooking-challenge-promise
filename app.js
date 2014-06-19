@@ -11,10 +11,21 @@ app.controller('CookingChallengeController', function($scope, $q) {
   $scope.winner = "";
   $scope.loser = "";
 
+  $scope.startChallenge = function() {
+    $q.all([findIngredientBy(ICHIKO), findIngredientBy(ACHIO)])
+      .then(function(challengers) {
+        ichiko = challengers[0];
+        achio = challengers[1];
+      }, function(loser) {
+
+      });
+  };
+
   findIngredientBy = function(challengerName) {
     var deferred = $q.defer();
+    var challenger = initializeChallenger(challengerName);
 
-    useFirstCue(challengerName)
+    useFirstCue(challenger)
       .then(useSecondCue)
       .then(useThirdCue)
       .then(function(result)
@@ -40,17 +51,14 @@ app.controller('CookingChallengeController', function($scope, $q) {
     return deferred.promise;
   };
 
-  useFirstCue = function(challengerName) {
+  useFirstCue = function(challenger) {
     var deferred = $q.defer();
 
-    deferred.resolve({
-      challengerName: challengerName,
-      firstCue: FIRST_CUE,
-      secondCue: SECOND_CUE,
-      thirdCue: "",
-      ingredient: "",
-      createdAt: Date.now()
-    });
+    challenger.firstCue = FIRST_CUE;
+    challenger.secondCue = SECOND_CUE;
+    challenger.updatedAt = Date.now();
+
+    deferred.resolve(challenger);
 
     return deferred.promise;
   };
@@ -58,14 +66,10 @@ app.controller('CookingChallengeController', function($scope, $q) {
   useSecondCue = function(challenger) {
     var deferred = $q.defer();
 
-    deferred.resolve({
-      challengerName: challenger.challengerName,
-      firstCue: challenger.firstCue,
-      secondCue: challenger.secondCue,
-      thirdCue: THIRD_CUE,
-      ingredient: "",
-      createdAt: Date.now()
-    });
+    challenger.thirdCue = THIRD_CUE;
+    challenger.updatedAt = Date.now();
+
+    deferred.resolve(challenger);
 
     return deferred.promise;
   };
@@ -74,21 +78,27 @@ app.controller('CookingChallengeController', function($scope, $q) {
     var deferred = $q.defer();
 
     if (challenger.challengerName == ICHIKO) {
-      challenger: challenger.challengerName,
-      firstCue: challenger.firstCue,
-      secondCue: challenger.secondCue,
-      thirdCue: challenger.thirdCue,
-      ingredient: RARE_INGREDIENT,
-      createdAt: Date.now()
+
+      challenger.ingredient = RARE_INGREDIENT,
+      challenger.updatedAt = Date.now();
+      deferred.resolve(challenger);
     } else {
-      challenger: challenger.challengerName,
-      firstCue: challenger.firstCue,
-      secondCue: challenger.secondCue,
-      thirdCue: challenger.thirdCue,
-      ingredient: "",
-      createdAt: Date.now()
+      challenger.updatedAt = Date.now();
+      deferred.reject(challenger);
     }
 
     return deferred.promise;
+  }
+
+  initializeChallenger = function(challengerName) {
+    return {
+      challengerName: challengerName,
+      firstCue: "",
+      secondCue: "",
+      thirdCue: "",
+      ingredient: "",
+      createdAt: Date.now(),
+      updatedAt: Date.now()
+    };
   }
 });
