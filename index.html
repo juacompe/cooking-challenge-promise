@@ -5,9 +5,8 @@
   </head>
   <body ng-app="app">
     <div ng-controller="CookingChallengeController">
-      <button>Start Cooking Challenge</button><br/>
-      <h2>Winner: A</h2><br/>
-      <h2>Winner: B</h2>
+      <button ng-click="startChallenge()">Start Cooking Challenge</button><br/>
+      <h2>Result: {{ result }}</h2><br/>
     </div>
     <script src="angular.js"></script>
     <script src="app.js"></script>

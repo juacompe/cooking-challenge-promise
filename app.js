@@ -8,16 +8,29 @@ app.controller('CookingChallengeController', function($scope, $q) {
   var SECOND_CUE = "waterfall in Kanangawa";
   var THIRD_CUE = "blue sea in Hokido";
 
-  $scope.winner = "";
-  $scope.loser = "";
+  $scope.result = "";
 
   $scope.startChallenge = function() {
     $q.all([findIngredientBy(ICHIKO), findIngredientBy(ACHIO)])
       .then(function(challengers) {
         ichiko = challengers[0];
         achio = challengers[1];
-      }, function(loser) {
 
+        if (ichiko.ingredient == RARE_INGREDIENT && achio.ingredient == RARE_INGREDIENT) {
+          $scope.result = "Mr.Ichiko and President Achio drawn";
+        } else if (ichiko.ingredient == RARE_INGREDIENT && achio.ingredient != RARE_INGREDIENT) {
+          $scope.result = "Mr.Ichiko win";
+        } else if (achio.ingredient == RARE_INGREDIENT && ichiko.ingredient != RARE_INGREDIENT) {
+          $scope.result = "President Achio win";
+        } else {
+          $scope.result = "Both of challengers failed to find the ingredient";
+        }
+      }, function(loser) {
+        if (loser.challenger == ICHIKO) {
+          $scope.result = "President Achio win";
+        } else {
+          $scope.result = "Mr.Ichiko win";
+        }
       });
   };
 
@@ -28,24 +41,12 @@ app.controller('CookingChallengeController', function($scope, $q) {
     useFirstCue(challenger)
       .then(useSecondCue)
       .then(useThirdCue)
-      .then(function(result)
-          deferred.resolve({
-            challengerName: result.challengerName,
-            firstCue: result.firstCue,
-            secondCue: result.secondCue,
-            thirdCue: result.thirdCue,
-            ingredient: result.ingredient,
-            createdAt: Date.now()
-          });
+      .then(function(challenger) {
+          challenger.updatedAt = Date.now();
+          deferred.resolve(challenger);
         }, function(reason) {
-          deferred.reject({
-            challengerName: reason.challengerName,
-            firstCue: reason.firstCue,
-            secondCue: reason.secondCue,
-            thirdCue: reason.thirdCue,
-            ingredient: "",
-            createdAt: Date.now()
-          });
+          challenger.updatedAt = Date.now();
+          deferred.reject(challenger);
         });
 
     return deferred.promise;
