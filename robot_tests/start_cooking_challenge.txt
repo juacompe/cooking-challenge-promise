@@ -1,0 +1,17 @@
+*** Settings ***
+Library                 Selenium2Library
+Test Teardown           Close Browser 
+
+*** Test Cases ***
+Start Cooking Challenge
+    When The Cooking Chllenge Has Been Started
+    Then Ichiko Should Win 
+
+*** Keywords ***
+The Cooking Chllenge Has Been Started
+    Open Browser  localhost:8000
+    Click Button  Start Cooking Challenge
+
+Ichiko Should Win 
+    Wait Until Page Contains  Mr.Ichiko win  5
+
