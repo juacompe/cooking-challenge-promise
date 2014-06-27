@@ -38,7 +38,8 @@ app.controller('CookingChallengeController', function($scope, $q) {
     var deferred = $q.defer();
     var challenger = initializeChallenger(challengerName);
 
-    useFirstCue(challenger)
+    $q.when(challenger)
+      .then(useFirstCue)
       .then(useSecondCue)
       .then(useThirdCue)
       .then(function(challenger) {
@@ -53,43 +54,28 @@ app.controller('CookingChallengeController', function($scope, $q) {
   };
 
   var useFirstCue = function(challenger) {
-    var deferred = $q.defer();
-
     challenger.firstCue = FIRST_CUE;
     challenger.secondCue = SECOND_CUE;
     challenger.updatedAt = Date.now();
-
-    deferred.resolve(challenger);
-
-    return deferred.promise;
+    return challenger;
   };
 
   var useSecondCue = function(challenger) {
-    var deferred = $q.defer();
-
     challenger.thirdCue = THIRD_CUE;
     challenger.updatedAt = Date.now();
-
-    deferred.resolve(challenger);
-
-    return deferred.promise;
+    return challenger;
   };
 
   var useThirdCue = function(challenger) {
-    var deferred = $q.defer();
-
     if (challenger.challengerName == ICHIKO) {
-
       challenger.ingredient = RARE_INGREDIENT;
       challenger.updatedAt = Date.now();
-      deferred.resolve(challenger);
+      return challenger;
     } else {
       challenger.updatedAt = Date.now();
-      deferred.reject(challenger);
+      throw challenger;
     }
-
-    return deferred.promise;
-  }
+  };
 
   var initializeChallenger = function(challengerName) {
     return {
