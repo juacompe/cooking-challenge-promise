@@ -16,6 +16,7 @@ app.controller('CookingChallengeController', function($scope, $q) {
   };
 
   function decidesWhoWins(challengers) {
+    var ichiko, achio;
     ichiko = challengers[0];
     achio = challengers[1];
 
@@ -38,7 +39,7 @@ app.controller('CookingChallengeController', function($scope, $q) {
     }
   };
 
-  var findIngredientBy = function(challengerName) {
+  function findIngredientBy(challengerName) {
     var deferred, challenger;
     deferred = $q.defer();
     challenger = new Challenger(challengerName);
@@ -58,17 +59,17 @@ app.controller('CookingChallengeController', function($scope, $q) {
     return deferred.promise;
   };
 
-  var doQuestOnDay1 = function(challenger) {
+  function doQuestOnDay1(challenger) {
     challenger.useFirst2Cues(FIRST_CUE, SECOND_CUE);
     return challenger;
   };
 
-  var doQuestOnDay2 = function(challenger) {
+  function doQuestOnDay2(challenger) {
     challenger.useThirdCue(THIRD_CUE);
     return challenger;
   };
 
-  var doQuestOnDay3 = function(challenger) {
+  function doQuestOnDay3(challenger) {
     var d = $q.defer();
     if (challenger.challengerName == ICHIKO) {
       challenger.findIngredient(RARE_INGREDIENT);
