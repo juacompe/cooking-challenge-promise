@@ -58,20 +58,17 @@ app.controller('CookingChallengeController', function($scope, $q) {
   };
 
   var useFirstCue = function(challenger) {
-    challenger.firstCue = FIRST_CUE;
-    challenger.secondCue = SECOND_CUE;
-    challenger.updatedAt = Date.now();
+    challenger.useFirst2Cues(FIRST_CUE, SECOND_CUE);
     return challenger;
   };
 
   var useSecondCue = function(challenger) {
-    challenger.thirdCue = THIRD_CUE;
-    challenger.updatedAt = Date.now();
+    challenger.useThirdCue(THIRD_CUE);
     return challenger;
   };
 
   var useThirdCue = function(challenger) {
-    if (challenger.challengerName == ICHIKO) {
+    if (challenger.challengerName == ACHIO) {
       challenger.ingredient = RARE_INGREDIENT;
       challenger.updatedAt = Date.now();
       return challenger;
@@ -94,4 +91,15 @@ function Challenger(name) {
   this.ingredient = "";
   this.createdAt = Date.now();
   this.updatedAt = Date.now();
+
+  this.useFirst2Cues = function(firstCue, secondCue) {
+    challenger.firstCue = firstCue;
+    challenger.secondCue = secondCue;
+    challenger.updatedAt = Date.now();
+  };
+  
+  this.useThirdCue = function(thirdCue) {
+    challenger.thirdCue = thirdCue;
+    challenger.updatedAt = Date.now();
+  };
 }
