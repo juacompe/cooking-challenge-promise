@@ -40,7 +40,7 @@ app.controller('CookingChallengeController', function($scope, $q) {
 
   var findIngredientBy = function(challengerName) {
     var deferred = $q.defer();
-    var challenger = initializeChallenger(challengerName);
+    var challenger = new Challenger(challengerName);
 
     $q.when(challenger)
       .then(useFirstCue)
@@ -68,19 +68,17 @@ app.controller('CookingChallengeController', function($scope, $q) {
   };
 
   var useThirdCue = function(challenger) {
-    if (challenger.challengerName == ACHIO) {
-      challenger.ingredient = RARE_INGREDIENT;
-      challenger.updatedAt = Date.now();
+    var d = $q.defer();
+    if (challenger.challengerName == ICHIKO) {
+      challenger.findIngredient(RARE_INGREDIENT);
       return challenger;
     } else {
-      challenger.updatedAt = Date.now();
-      throw challenger;
+      challenger.admitDefeat();
+      d.reject(challenger);
     }
+    return d.promise;
   };
 
-  var initializeChallenger = function(challengerName) {
-    return new Challenger(challengerName);
-  }
 });
 
 function Challenger(name) {
@@ -93,13 +91,26 @@ function Challenger(name) {
   this.updatedAt = Date.now();
 
   this.useFirst2Cues = function(firstCue, secondCue) {
-    challenger.firstCue = firstCue;
-    challenger.secondCue = secondCue;
-    challenger.updatedAt = Date.now();
+    this.firstCue = firstCue;
+    this.secondCue = secondCue;
+    this.updatedAt = Date.now();
   };
   
   this.useThirdCue = function(thirdCue) {
-    challenger.thirdCue = thirdCue;
-    challenger.updatedAt = Date.now();
+    this.thirdCue = thirdCue;
+    this.update();
+  };
+
+  this.findIngredient = function(i) {
+    this.ingredient = i;
+    this.update();
+  };
+
+  this.admitDefeat = function() {
+    this.update();
+  };
+
+  this.update = function() {
+    this.updatedAt = Date.now();
   };
 }
