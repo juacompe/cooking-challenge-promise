@@ -39,8 +39,9 @@ app.controller('CookingChallengeController', function($scope, $q) {
   };
 
   var findIngredientBy = function(challengerName) {
-    var deferred = $q.defer();
-    var challenger = new Challenger(challengerName);
+    var deferred, challenger;
+    deferred = $q.defer();
+    challenger = new Challenger(challengerName);
 
     $q.when(challenger)
       .then(useFirstCue)
