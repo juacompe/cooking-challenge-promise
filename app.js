@@ -12,26 +12,30 @@ app.controller('CookingChallengeController', function($scope, $q) {
 
   $scope.startChallenge = function() {
     $q.all([findIngredientBy(ICHIKO), findIngredientBy(ACHIO)])
-      .then(function(challengers) {
-        ichiko = challengers[0];
-        achio = challengers[1];
+      .then(decidesWhoWins, decidesWinnerFromLoser);
+  };
 
-        if (ichiko.ingredient == RARE_INGREDIENT && achio.ingredient == RARE_INGREDIENT) {
-          $scope.result = "Mr.Ichiko and President Achio drawn";
-        } else if (ichiko.ingredient == RARE_INGREDIENT && achio.ingredient != RARE_INGREDIENT) {
-          $scope.result = "Mr.Ichiko win";
-        } else if (achio.ingredient == RARE_INGREDIENT && ichiko.ingredient != RARE_INGREDIENT) {
-          $scope.result = "President Achio win";
-        } else {
-          $scope.result = "Both of challengers failed to find the ingredient";
-        }
-      }, function(loser) {
-        if (loser.challenger == ICHIKO) {
-          $scope.result = "President Achio win";
-        } else {
-          $scope.result = "Mr.Ichiko win";
-        }
-      });
+  function decidesWhoWins(challengers) {
+    ichiko = challengers[0];
+    achio = challengers[1];
+
+    if (ichiko.ingredient == RARE_INGREDIENT && achio.ingredient == RARE_INGREDIENT) {
+      $scope.result = "Mr.Ichiko and President Achio drawn";
+    } else if (ichiko.ingredient == RARE_INGREDIENT && achio.ingredient != RARE_INGREDIENT) {
+      $scope.result = "Mr.Ichiko win";
+    } else if (achio.ingredient == RARE_INGREDIENT && ichiko.ingredient != RARE_INGREDIENT) {
+      $scope.result = "President Achio win";
+    } else {
+      $scope.result = "Both of challengers failed to find the ingredient";
+    }
+  };
+
+  function decidesWinnerFromLoser(loser) {
+    if (loser.challenger == ICHIKO) {
+      $scope.result = "President Achio win";
+    } else {
+      $scope.result = "Mr.Ichiko win";
+    }
   };
 
   var findIngredientBy = function(challengerName) {
