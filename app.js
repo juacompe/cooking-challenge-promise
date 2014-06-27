@@ -82,14 +82,16 @@ app.controller('CookingChallengeController', function($scope, $q) {
   };
 
   var initializeChallenger = function(challengerName) {
-    return {
-      challengerName: challengerName,
-      firstCue: "",
-      secondCue: "",
-      thirdCue: "",
-      ingredient: "",
-      createdAt: Date.now(),
-      updatedAt: Date.now()
-    };
+    return new Challenger(challengerName);
   }
 });
+
+function Challenger(name) {
+  this.challengerName = name;
+  this.firstCue = "";
+  this.secondCue = "";
+  this.thirdCue = "";
+  this.ingredient = "";
+  this.createdAt = Date.now();
+  this.updatedAt = Date.now();
+}
