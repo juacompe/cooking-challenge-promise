@@ -5,11 +5,28 @@
   </head>
   <body ng-app="app">
     <div ng-controller="CookingChallengeController">
-      <button>Start Cooking Challenge</button><br/>
-      <h2>Winner: A</h2><br/>
-      <h2>Winner: B</h2>
+
+    	<div> timer : {{ clock }} </div>
+    	<ul ng-repeat="m in message">
+    		<li>{{ m }}</li>
+    	</ul>
+    	<br>
+
+    	<div>{{ chinjung.challenger_name }}</div>
+      <div><button ng-disabled="completed" ng-click="chinjung.quiz1.solved()">found mushroom</button> {{ chinjung.quiz1.timeleft() }}</div>
+      <div><button ng-disabled="completed || !chinjung.quiz1.isSolved()" ng-click="chinjung.quiz2.solved()">found ginseng</button> {{ chinjung.quiz2.timeleft() }}</div>
+      <div><button ng-disabled="completed || !chinjung.quiz2.isSolved()" ng-click="chinjung.quiz3.solved()">found greentea</button> {{ chinjung.quiz3.timeleft() }}</div>
+      <div>
+      <br>
+
+      <div>{{ akiko.challenger_name }}</div>
+      <div><button ng-disabled="completed" ng-click="akiko.quiz1.solved()">found mushroom</button></div>
+      <div><button ng-disabled="completed || !akiko.quiz1.isSolved()" ng-click="akiko.quiz2.solved()">found ginseng</button></div>
+      <div><button ng-disabled="completed || !akiko.quiz2.isSolved()" ng-click="akiko.quiz3.solved()">found greentea</button></div>
+      <div>
+    </div>
     </div>
     <script src="angular.js"></script>
-    <script src="app.js"></script>
+    <script src="app2.js"></script>
   </body>
 </html>
