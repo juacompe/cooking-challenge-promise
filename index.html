@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Mr. Ichiko vs President Achio -- Cooking Challenge</title>
+    <title>Mr. Chin Jung vs Akiko -- Cooking Challenge</title>
   </head>
   <body ng-app="app">
     <div ng-controller="CookingChallengeController">
@@ -13,16 +13,16 @@
     	<br>
 
     	<div>{{ chinjung.challenger_name }}</div>
-      <div><button ng-disabled="completed" ng-click="chinjung.quiz1.solved()">found mushroom</button> {{ chinjung.quiz1.timeleft() }}</div>
+      <div><button ng-disabled="completed" ng-click="chinjung.quiz1.solved()">found mushroom</button></div>
       <div><button ng-disabled="completed || !chinjung.quiz1.isSolved()" ng-click="chinjung.quiz2.solved()">found ginseng</button> {{ chinjung.quiz2.timeleft() }}</div>
-      <div><button ng-disabled="completed || !chinjung.quiz2.isSolved()" ng-click="chinjung.quiz3.solved()">found greentea</button> {{ chinjung.quiz3.timeleft() }}</div>
+      <div><button ng-disabled="completed || !chinjung.quiz2.isSolved()" ng-click="chinjung.quiz3.solved()">found green tea</button> {{ chinjung.quiz3.timeleft() }}</div>
       <div>
       <br>
 
       <div>{{ akiko.challenger_name }}</div>
       <div><button ng-disabled="completed" ng-click="akiko.quiz1.solved()">found mushroom</button></div>
       <div><button ng-disabled="completed || !akiko.quiz1.isSolved()" ng-click="akiko.quiz2.solved()">found ginseng</button></div>
-      <div><button ng-disabled="completed || !akiko.quiz2.isSolved()" ng-click="akiko.quiz3.solved()">found greentea</button></div>
+      <div><button ng-disabled="completed || !akiko.quiz2.isSolved()" ng-click="akiko.quiz3.solved()">found green tea</button></div>
       <div>
     </div>
     </div>
