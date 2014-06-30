@@ -41,12 +41,22 @@ describe('challenges', function() {
         });
     });
 
-    it('should return error message when timeout', inject(function(timer, $q, $rootScope) {
+    it('should out when cannot find ingredient in time', inject(function(timer, $q, $rootScope) {
         var d, promise, message;
         d = $q.defer();
         promise = c.start(d.promise);
         d.reject('timeout');
         message = 'akiko is out because : cannot find mushroom in time';
+        expect(getResolvedValue(promise, $rootScope)).toEqual(message);
+    }));
+
+    it('should complete when all ingredient are found', inject(function(timer, $q, $rootScope) {
+        var d, promise, message;
+        promise = c.start(new timer());
+        c.quiz1.solved();
+        c.quiz2.solved();
+        c.quiz3.solved();
+        message = 'akiko has completed all the challenges!';
         expect(getResolvedValue(promise, $rootScope)).toEqual(message);
     }));
 });
