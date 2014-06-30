@@ -10,12 +10,12 @@ app.controller('CookingChallengeController', function($scope, $q, challenges, co
 
   $scope.competition.clock.then(null, null, function(data) {
     $scope.clock = data;
-  })
+  });
 
   $scope.competition.start().then(function(data) {
     $scope.completed = true;
     $scope.message = data;
-  })
+  });
 
 });
 
@@ -24,23 +24,23 @@ app.factory('competition', function($q, timer) {
     var clock = new timer(second);
 
     this.start = function() {
-      var promises = challengers.map(function(ch) { return ch.start(clock) });
+      var promises = challengers.map(function(ch) { return ch.start(clock); });
       return $q.all(promises).then(function(data) {
         clock.stop();
         return data;
       });
-    }
+    };
 
     this.clock = clock;
 
     return this;
-  }
+  };
 });
 
 app.factory('challenges', function($q, quiz) {
 
   return function(challenger) {
-    this.challenger_name = challenger
+    this.challenger_name = challenger;
 
     this.start = function(timer) {
 
@@ -70,16 +70,16 @@ app.factory('quiz', function($q) {
     var isSolved = false;
     var deferred = $q.defer();
 
-    timer.catch(function() { deferred.reject('cannot find ' + item + ' in time') });
+    timer.catch(function() { deferred.reject('cannot find ' + item + ' in time'); });
 
     this.solved = function() {
       deferred.resolve('found ' + name);
       isSolved = true;
-    }
+    };
 
     this.isSolved = function() {
       return isSolved;
-    }
+    };
 
     this.result = function() {
       return deferred.promise;
@@ -103,7 +103,7 @@ app.factory('timer', function($interval, $q) {
       }
     }, 1000);
 
-    deferred.promise.stop = function() { $interval.cancel(clock); }
+    deferred.promise.stop = function() { $interval.cancel(clock); };
 
     return deferred.promise;
   };
