@@ -4,8 +4,9 @@ module.exports = function(karma) {
     config.frameworks = ['jasmine'];
     config.files = [
         'angular.js',
+        'angular-mocks.js',
         'app2.js',
-        'specs/**',
+        'specs/**/*.js',
     ];
     config.reporters = ['dots'];
     config.port = 9876;
