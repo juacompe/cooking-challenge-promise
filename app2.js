@@ -92,7 +92,7 @@ function Quiz(item, timer, $q) {
     this.result = function() {
       return deferred.promise;
     };
-};
+}
 
 
 app.factory('timer', function($interval, $q) {

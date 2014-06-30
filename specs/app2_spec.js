@@ -48,15 +48,34 @@ describe('quiz', function() {
 
     it('return result after solved', inject(function($rootScope) {
         q.solved();
-        expect(extractResult(q, $rootScope)).toEqual('found mushroom');
+        expect(getResolvedValue(q.result(), $rootScope)).toEqual('found mushroom');
     }));
 
-    function extractResult(q, $rootScope) {
+    it('return cannot find item in time when time up', inject(function($rootScope, $q) {
+        var d = $q.defer();
+        inject(function(quiz){
+            q = new quiz('mushroom', d.promise);
+        });
+        d.reject('timeout');
+        expect(getRejectedValue(q.result(), $rootScope)).toEqual('cannot find mushroom in time');
+    }));
+
+    function getResolvedValue(promise, $rootScope) {
         var result;
-        q.result().then(function(value) {
+        promise.then(function(value) {
             result = value;
         });
         $rootScope.$apply();
         return result;
     }
+
+    function getRejectedValue(promise, $rootScope) {
+        var result;
+        promise.catch(function(value) {
+            result = value;
+        });
+        $rootScope.$apply();
+        return result;
+    }
+
 });
