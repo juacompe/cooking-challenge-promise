@@ -39,29 +39,35 @@ app.factory('competition', function($q, timer) {
 
 app.factory('challenges', function($q, quiz) {
 
-  return function(challenger) {
+    function createChallenger(challenger) {
+        return new Challenger(challenger, $q, quiz);
+    }
+
+    return createChallenger;
+});
+
+function Challenger(challenger, $q, quiz) {
     this.challenger_name = challenger;
 
     this.start = function(timer) {
 
-      var deferred = $q.defer();
-      this.quiz1 = new quiz('mushroom', timer);
-      this.quiz2 = new quiz('ginseng', timer);
-      this.quiz3 = new quiz('green tea', timer);
+        var deferred = $q.defer();
+        this.quiz1 = new quiz('mushroom', timer);
+        this.quiz2 = new quiz('ginseng', timer);
+        this.quiz3 = new quiz('green tea', timer);
 
-      this.quiz1.result()
-        .then(this.quiz2.result)
-        .then(this.quiz3.result)
-        .then(function() {
-          deferred.resolve(challenger + " has completed all the challenges!");
-      }, function(data) {
-          deferred.resolve(challenger + " is out because : " + data);
-      });
+        this.quiz1.result()
+            .then(this.quiz2.result)
+            .then(this.quiz3.result)
+            .then(function() {
+                deferred.resolve(challenger + " has completed all the challenges!");
+        }, function(data) {
+                deferred.resolve(challenger + " is out because : " + data);
+        });
 
-      return deferred.promise;
+        return deferred.promise;
     };
-  };
-});
+};
 
 
 app.factory('quiz', function($q) {
