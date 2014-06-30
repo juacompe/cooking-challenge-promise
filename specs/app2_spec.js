@@ -41,7 +41,7 @@ describe('challenges', function() {
         });
     });
 
-    it('should out when cannot find ingredient in time', inject(function(timer, $q, $rootScope) {
+    it('should out when cannot find ingredient in time', inject(function($q, $rootScope) {
         var d, promise, message;
         d = $q.defer();
         promise = c.start(d.promise);
@@ -50,8 +50,8 @@ describe('challenges', function() {
         expect(getResolvedValue(promise, $rootScope)).toEqual(message);
     }));
 
-    it('should complete when all ingredient are found', inject(function(timer, $q, $rootScope) {
-        var d, promise, message;
+    it('should complete when all ingredient are found', inject(function(timer, $rootScope) {
+        var promise, message;
         promise = c.start(new timer());
         c.quiz1.solved();
         c.quiz2.solved();
