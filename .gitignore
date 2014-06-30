@@ -1,0 +1,8 @@
+node_modules/
+*.swp
+
+# PYBOT RESULTS 
+report.html
+output.xml
+log.html
+*.png
