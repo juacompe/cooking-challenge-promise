@@ -96,21 +96,27 @@ function Quiz(item, timer, $q) {
 
 
 app.factory('timer', function($interval, $q) {
+  var deferred = $q.defer();
+  
+  function createTimer(second) {
+    new Timer(second, $interval, $q, deferred);
+    return deferred.promise;
+  }
 
-  return function(second) {
-    var deferred = $q.defer();
+  return createTimer; 
+});
+
+function Timer(second, $interval, $q, deferred) {
     var counter = second;
     var clock = $interval(function() {
-      counter--;
-      deferred.notify(counter);
-      if (counter <= 0) {
-        deferred.reject("timeout");
-        $interval.cancel(clock);
-      }
+        counter--;
+        deferred.notify(counter);
+        if (counter <= 0) {
+            deferred.reject("timeout");
+            $interval.cancel(clock);
+        }
     }, 1000);
 
     deferred.promise.stop = function() { $interval.cancel(clock); };
+}
 
-    return deferred.promise;
-  };
-});
