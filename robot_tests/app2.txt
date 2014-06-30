@@ -1,0 +1,35 @@
+*** Settings ***
+Library                 Selenium2Library
+Suite Setup             Open Browser  ${URL} 
+Suite Teardown          Close All Browsers
+
+*** Variables ***
+${URL}                  http://localhost:8000/
+${TIMEOUT}              10s
+${INTERVAL}             1s
+${CHIN JUNG WIN}        chin jung has completed all the challenges!
+
+*** Test Cases ***
+Chin Jung Dominates
+    Competition Page Is Opened
+    Chin Jung Found Mushroom
+    Chin Jung Found Ginseng 
+    Chin Jung Found Green Tea
+    Chin Jung Should Complete All Challenges
+
+*** Keywords ***
+Competition Page Is Opened
+    Go To  ${URL} 
+
+Chin Jung Found Mushroom
+    Click Button  chin_jung_found_mushroom
+
+Chin Jung Found Ginseng 
+    Click Button  chin_jung_found_ginseng
+
+Chin Jung Found Green Tea
+    Click Button  chin_jung_found_greentea
+
+Chin Jung Should Complete All Challenges
+    Wait Until Keyword Succeeds  ${TIMEOUT}  ${INTERVAL}  Page Should Contain  ${CHIN JUNG WIN} 
+

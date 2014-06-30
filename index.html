@@ -13,9 +13,9 @@
     	<br>
 
     	<div>{{ chinjung.challenger_name }}</div>
-      <div><button ng-disabled="completed" ng-click="chinjung.quiz1.solved()">found mushroom</button></div>
-      <div><button ng-disabled="completed || !chinjung.quiz1.isSolved()" ng-click="chinjung.quiz2.solved()">found ginseng</button> {{ chinjung.quiz2.timeleft() }}</div>
-      <div><button ng-disabled="completed || !chinjung.quiz2.isSolved()" ng-click="chinjung.quiz3.solved()">found green tea</button> {{ chinjung.quiz3.timeleft() }}</div>
+      <div><button id="chin_jung_found_mushroom" ng-disabled="completed" ng-click="chinjung.quiz1.solved()">found mushroom</button></div>
+      <div><button id="chin_jung_found_ginseng" ng-disabled="completed || !chinjung.quiz1.isSolved()" ng-click="chinjung.quiz2.solved()">found ginseng</button> {{ chinjung.quiz2.timeleft() }}</div>
+      <div><button id="chin_jung_found_greentea" ng-disabled="completed || !chinjung.quiz2.isSolved()" ng-click="chinjung.quiz3.solved()">found green tea</button> {{ chinjung.quiz3.timeleft() }}</div>
       <div>
       <br>
 
