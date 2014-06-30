@@ -31,6 +31,26 @@ describe('CookingChallengeController', function() {
     }));
 });
 
+describe('challenges', function() {
+    var c;
+
+    beforeEach(function(){
+        module('app');
+        inject(function(challenges){
+            c = new challenges('akiko');
+        });
+    });
+
+    it('should return error message when timeout', inject(function(timer, $q, $rootScope) {
+        var d, promise, message;
+        d = $q.defer();
+        promise = c.start(d.promise);
+        d.reject('timeout');
+        message = 'akiko is out because : cannot find mushroom in time';
+        expect(getResolvedValue(promise, $rootScope)).toEqual(message);
+    }));
+});
+
 describe('quiz', function() {
     var q;
 
@@ -60,22 +80,23 @@ describe('quiz', function() {
         expect(getRejectedValue(q.result(), $rootScope)).toEqual('cannot find mushroom in time');
     }));
 
-    function getResolvedValue(promise, $rootScope) {
-        var result;
-        promise.then(function(value) {
-            result = value;
-        });
-        $rootScope.$apply();
-        return result;
-    }
-
-    function getRejectedValue(promise, $rootScope) {
-        var result;
-        promise.catch(function(value) {
-            result = value;
-        });
-        $rootScope.$apply();
-        return result;
-    }
-
 });
+
+function getResolvedValue(promise, $rootScope) {
+    var result;
+    promise.then(function(value) {
+        result = value;
+    });
+    $rootScope.$apply();
+    return result;
+}
+
+function getRejectedValue(promise, $rootScope) {
+    var result;
+    promise.catch(function(value) {
+        result = value;
+    });
+    $rootScope.$apply();
+    return result;
+}
+
