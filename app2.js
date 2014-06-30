@@ -63,9 +63,17 @@ app.factory('challenges', function($q, quiz) {
   };
 });
 
+
 app.factory('quiz', function($q) {
 
-  return function(item, timer) {
+    function createQuiz(item, timer) {
+        return new Quiz(item, timer, $q);
+    }
+
+    return createQuiz;
+});
+
+function Quiz(item, timer, $q) {
     var name = item;
     var isSolved = false;
     var deferred = $q.defer();
@@ -84,10 +92,8 @@ app.factory('quiz', function($q) {
     this.result = function() {
       return deferred.promise;
     };
+};
 
-    return this;
-  };
-});
 
 app.factory('timer', function($interval, $q) {
 
