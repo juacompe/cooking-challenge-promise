@@ -67,7 +67,7 @@ function Challenger(challenger, $q, quiz) {
 
         return deferred.promise;
     };
-};
+}
 
 
 app.factory('quiz', function($q) {
