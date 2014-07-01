@@ -34,5 +34,10 @@ function jshintConfig() {
     jshint.spec.options.globals.describe = true;
     jshint.spec.options.globals.it = true;
     jshint.spec.options.globals.expect = true;
+    jshint.options = {};
+    jshint.options.trailing = true;
+    jshint.options.latedef = 'nofunc';
+    jshint.options.unused = true;
+    jshint.options.reporter = require('jshint-stylish');
     return jshint;
 }
