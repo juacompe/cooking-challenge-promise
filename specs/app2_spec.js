@@ -7,20 +7,19 @@ describe('CookingChallengeController', function() {
     });
 
     function createController($rootScope, $controller) {
-        var config;
         $scope = $rootScope.$new();
         $controller('CookingChallengeController', {$scope:$scope});
     }
 
-    it('should let chin jung solve quiz1', inject(function($rootScope) {
+    it('should let chin jung solve quiz1', function() {
         $scope.chinjung.quiz1.solved();
         expect($scope.chinjung.quiz1.isSolved()).toEqual(true);
-    }));
+    });
 
-    it('should let chin jung solve quiz3 without solving quiz1 first', inject(function($rootScope) {
+    it('should let chin jung solve quiz3 without solving quiz1 first', function() {
         $scope.chinjung.quiz3.solved();
         expect($scope.chinjung.quiz3.isSolved()).toEqual(true);
-    }));
+    });
 
     it('should let chin jung wins', inject(function($rootScope) {
         $scope.chinjung.quiz1.solved();
