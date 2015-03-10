@@ -21,12 +21,17 @@ describe('CookingChallengeController', function() {
         expect($scope.chinjung.quiz3.isSolved()).toEqual(true);
     });
 
-    it('should let chin jung wins', inject(function($rootScope) {
+    it('should let chin jung wins', inject(function($rootScope, $interval) {
+        var clock = $scope.clock;
         $scope.chinjung.quiz1.solved();
         $scope.chinjung.quiz2.solved();
         $scope.chinjung.quiz3.solved();
+
+        // trick 10 seconds interval
+        for (var i = 0; i < clock; i++) $interval.flush(1000);
+
         $rootScope.$apply();
-        //expect($scope.completed).toEqual(true);
+        expect($scope.completed).toEqual(true);
     }));
 });
 
